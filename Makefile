@@ -39,8 +39,11 @@ EXEC_CPP=darknet-cpp
 SHARED_CPP=darknet-cpp-shared
 OBJDIR_CPP=./obj-cpp/
 OBJDIR_CPP_SHARED=./obj-cpp-shared/
-CC_CPP=g++
-CFLAGS_CPP=-Wno-write-strings
+#CC_CPP=g++
+CC_CPP=/usr/bin/c++
+#CFLAGS_CPP=-Wno-write-strings -mavx -std=c++0x -I/usr/local/cuda-8.0/include -I/usr/local/zed/include -I/usr/include/eigen3 -I/home/mmvc/niu/zed-opencv/include -isystem /usr/local/include -isystem /usr/local/include/opencv -Wno-format-extra-args  
+CFLAGS_CPP= -I/usr/local/cuda-8.0/include -I/usr/local/zed/include -I/usr/include/eigen3 -I/home/mmvc/niu/zed-opencv/include -isystem /usr/local/include -isystem /usr/local/include/opencv  -mavx -Wno-format-extra-args -std=c++0x 
+#CFLAGS_CPP+= -L/usr/local/cuda-8.0/lib64  -L/usr/local/zed/lib -rdynamic /usr/local/zed/lib/libsl_zed.so /usr/local/zed/lib/libsl_depthcore.so /usr/local/zed/lib/libsl_calibration.so /usr/local/zed/lib/libsl_tracking.so /usr/local/zed/lib/libsl_disparityFusion.so /usr/local/zed/lib/libsl_svorw.so /usr/local/zed/lib/libcudpp.so /usr/local/zed/lib/libcudpp_hash.so /usr/local/lib/libopencv_cudabgsegm.so.3.2.0 /usr/local/lib/libopencv_cudaobjdetect.so.3.2.0 /usr/local/lib/libopencv_cudastereo.so.3.2.0 /usr/local/lib/libopencv_ml.so.3.2.0 /usr/local/lib/libopencv_shape.so.3.2.0 /usr/local/lib/libopencv_stitching.so.3.2.0 /usr/local/lib/libopencv_superres.so.3.2.0 /usr/local/lib/libopencv_videostab.so.3.2.0 -lcuda /usr/local/cuda-8.0/lib64/libcudart.so /usr/local/cuda-8.0/lib64/libnppc.so /usr/local/cuda-8.0/lib64/libnppi.so /usr/local/cuda-8.0/lib64/libnpps.so /usr/local/lib/libopencv_cudafeatures2d.so.3.2.0 /usr/local/lib/libopencv_cudacodec.so.3.2.0 /usr/local/lib/libopencv_cudaoptflow.so.3.2.0 /usr/local/lib/libopencv_cudalegacy.so.3.2.0 /usr/local/lib/libopencv_calib3d.so.3.2.0 /usr/local/lib/libopencv_cudawarping.so.3.2.0 /usr/local/lib/libopencv_features2d.so.3.2.0 /usr/local/lib/libopencv_flann.so.3.2.0 /usr/local/lib/libopencv_highgui.so.3.2.0 /usr/local/lib/libopencv_objdetect.so.3.2.0 /usr/local/lib/libopencv_photo.so.3.2.0 /usr/local/lib/libopencv_cudaimgproc.so.3.2.0 /usr/local/lib/libopencv_cudafilters.so.3.2.0 /usr/local/lib/libopencv_cudaarithm.so.3.2.0 /usr/local/lib/libopencv_video.so.3.2.0 /usr/local/lib/libopencv_videoio.so.3.2.0 /usr/local/lib/libopencv_imgcodecs.so.3.2.0 /usr/local/lib/libopencv_imgproc.so.3.2.0 /usr/local/lib/libopencv_core.so.3.2.0 /usr/local/lib/libopencv_cudev.so.3.2.0 -Wl,-rpath,/usr/local/cuda-8.0/lib64:/usr/local/zed/lib:/usr/local/lib
 
 NVCC=nvcc
 
@@ -69,7 +72,7 @@ LDFLAGS += -L./3rdparty
 ifeq ($(GPU), 1) 
 COMMON+= -DGPU -I/usr/local/cuda/include/
 CFLAGS+= -DGPU
-LDFLAGS+= -L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand
+LDFLAGS+= -L/usr/local/cuda-8.0/lib64 -L/usr/local/zed/lib -rdynamic /usr/local/zed/lib/libsl_zed.so /usr/local/zed/lib/libsl_depthcore.so /usr/local/zed/lib/libsl_calibration.so /usr/local/zed/lib/libsl_tracking.so /usr/local/zed/lib/libsl_disparityFusion.so /usr/local/zed/lib/libsl_svorw.so /usr/local/zed/lib/libcudpp.so /usr/local/zed/lib/libcudpp_hash.so /usr/local/lib/libopencv_cudabgsegm.so.3.2.0 /usr/local/lib/libopencv_cudaobjdetect.so.3.2.0 /usr/local/lib/libopencv_cudastereo.so.3.2.0 /usr/local/lib/libopencv_ml.so.3.2.0 /usr/local/lib/libopencv_shape.so.3.2.0 /usr/local/lib/libopencv_stitching.so.3.2.0 /usr/local/lib/libopencv_superres.so.3.2.0 /usr/local/lib/libopencv_videostab.so.3.2.0 -lcuda /usr/local/cuda-8.0/lib64/libcudart.so /usr/local/cuda-8.0/lib64/libnppc.so /usr/local/cuda-8.0/lib64/libnppi.so /usr/local/cuda-8.0/lib64/libnpps.so /usr/local/lib/libopencv_cudafeatures2d.so.3.2.0 /usr/local/lib/libopencv_cudacodec.so.3.2.0 /usr/local/lib/libopencv_cudaoptflow.so.3.2.0 /usr/local/lib/libopencv_cudalegacy.so.3.2.0 /usr/local/lib/libopencv_calib3d.so.3.2.0 /usr/local/lib/libopencv_cudawarping.so.3.2.0 /usr/local/lib/libopencv_features2d.so.3.2.0 /usr/local/lib/libopencv_flann.so.3.2.0 /usr/local/lib/libopencv_highgui.so.3.2.0 /usr/local/lib/libopencv_objdetect.so.3.2.0 /usr/local/lib/libopencv_photo.so.3.2.0 /usr/local/lib/libopencv_cudaimgproc.so.3.2.0 /usr/local/lib/libopencv_cudafilters.so.3.2.0 /usr/local/lib/libopencv_cudaarithm.so.3.2.0 /usr/local/lib/libopencv_video.so.3.2.0 /usr/local/lib/libopencv_videoio.so.3.2.0 /usr/local/lib/libopencv_imgcodecs.so.3.2.0 /usr/local/lib/libopencv_imgproc.so.3.2.0 /usr/local/lib/libopencv_core.so.3.2.0 /usr/local/lib/libopencv_cudev.so.3.2.0 -Wl,-rpath,/usr/local/cuda-8.0/lib64:/usr/local/zed/lib:/usr/local/lib -lcuda -lcudart -lcublas -lcurand 
 endif
 
 ifeq ($(CUDNN), 1) 

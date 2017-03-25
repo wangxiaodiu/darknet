@@ -17,6 +17,12 @@
 #include "opencv2/highgui/highgui_c.h"
 #include "opencv2/videoio/videoio_c.h"
 #include "opencv2/imgproc/imgproc_c.h"
+
+// zed header files
+#include <opencv2/opencv.hpp>
+#include <zed/Camera.hpp>
+#include <zed/utils/GlobalDefine.hpp>
+
 image get_image_from_stream(CvCapture *cap);
 
 static char **demo_names;
@@ -114,14 +120,30 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     srand(2222222);
 
+    sl::zed::Camera* zed;
+
     if(filename){
         printf("video file: %s\n", filename);
         cap = cvCaptureFromFile(filename);
     }else{
-        cap = cvCaptureFromCAM(cam_index);
+        /* cap = cvCaptureFromCAM(cam_index); */
+
+        // initialize zed camera
+        std::string SVOName;
+        zed = new sl::zed::Camera(sl::zed::HD720);
+        sl::zed::InitParams params;
+        params.verbose = true;
+        sl::zed::ERRCODE err = zed->init(params);
+        std::cout << "Error code : " << sl::zed::errcode2str(err) << std::endl;
+        if (err != sl::zed::SUCCESS) {
+            // Exit if an error occurred
+            std::cout << "ZED initialization Error!" << std::endl;
+            delete zed;
+            exit(1);
+        }
     }
 
-    if(!cap) error("Couldn't connect to webcam.\n");
+    /* if(!cap) error("Couldn't connect to webcam.\n"); */
 
     layer l = net.layers[net.n-1];
     int j;
