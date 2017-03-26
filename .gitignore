@@ -4,6 +4,7 @@
 *.out
 *.png
 *.jpg
+*.weights
 old/
 mnist/
 data/
@@ -15,6 +16,7 @@ convnet/
 decaf/
 submission/
 cfg/
+src/zed.cpp
 darknet
 darknet-cpp
 .fuse*
