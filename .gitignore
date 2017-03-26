@@ -19,6 +19,7 @@ cfg/
 src/zed.cpp
 darknet
 darknet-cpp
+bad.list
 .fuse*
 
 # OS Generated #

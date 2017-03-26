@@ -8,6 +8,13 @@
 #include <math.h>
 #include "box.h"
 
+#ifdef OPENCV
+#include "opencv2/highgui/highgui_c.h"
+#include "opencv2/videoio/videoio_c.h"
+#include "opencv2/imgproc/imgproc_c.h"
+#endif
+
+
 typedef struct {
     int h;
     int w;
@@ -57,6 +64,9 @@ image collapse_images_horz(image *ims, int n);
 image collapse_images_vert(image *ims, int n);
 
 void show_image(image p, const char *name);
+#ifdef OPENCV
+image ipl_to_image(IplImage* src);
+#endif
 void show_image_normalized(image im, const char *name);
 void save_image_png(image im, const char *name);
 void save_image(image p, const char *name);
