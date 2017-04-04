@@ -5,6 +5,7 @@
 *.png
 *.jpg
 *.weights
+arapaho/input*
 old/
 mnist/
 data/
