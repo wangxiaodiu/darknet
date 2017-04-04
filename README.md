@@ -1,4 +1,4 @@
-![Darknet Logo](http://pjreddie.com/media/files/darknet-black-small.png)
+![Darknet Logo](https://github.com/prabindh/darknet/blob/master/arapaho/darknetcpplogo.png)
 
 # Darknet-cpp
 
@@ -10,14 +10,16 @@ Darknet-cpp project is a bug-fixed and C++ compilable version of darknet, an ope
 
 * The Linux build system supports 3 targets - 
   * original darknet (with gcc compiler), 
-  * darknet-cpp (with g++ compiler), and 
+  * darknet-cpp (with g++ compiler and Visual Studio compiler), and 
   * Shared library (libdarknet-cpp-shared.so)
 
 * Can use bounding boxes directly from Euclid object labeller (https://github.com/prabindh/euclid)
 
-* C++ API - arapaho, that works in conjunction with libdarknet-cpp-shared.so
+* C++ API - arapaho, that works in conjunction with libdarknet-cpp-shared.so, and a test wrapper that can read images or video files, and show detected regions in a complete C++ application.
 
-* darknet-cpp supports OpenCV3. Tested on Ubuntu 16.04 and CUDA 8.x
+* darknet-cpp supports OpenCV3. Tested on Ubuntu 16.04 and windows, with CUDA 8.x
+
+* Note: darknet-cpp requires a C++11 compiler for arapaho builds.
 
 **Usage**
 
@@ -26,6 +28,7 @@ Using the Makefile in the root directory of the darknet source repository,
  * `make darknet` - only darknet (original code), with OPENCV=0
  * `make darknet-cpp` - only the CPP version, with OPENCV=1
  * `make darknet-cpp-shared` - build the shared-lib version (without darknet.c calling wrapper), OPENCV=1
+ * `make arapaho` - build arapaho and its test wrapper (from within arapaho folder)
  
 **Steps to train (Yolov2)**
 
@@ -37,7 +40,7 @@ git clone https://github.com/prabindh/darknet
 
 https://github.com/prabindh/euclid
 
-This creates a training list file that will be needed in next step.
+This creates a training list file (train.txt) that will be needed in next step of training.
 
 * Change the files per below:
 
@@ -55,6 +58,16 @@ This creates a training list file that will be needed in next step.
   `./darknet-cpp detector train ./cfg/voc-myclasses.data ./cfg/yolo-myconfig.cfg darknet19_448.conv.23`
 
   * Atleast for the few initial iterations, observe the log output, and ensure all images are found and being used. After convergence, detection can be performed using standard steps.
+
+* Testing with Arapaho C++ API for detection
+
+  Arapaho needs the darknet-cpp shared library (.so file on Linux, .dll on Windows). This can be built as below on Linux.
+
+  `make darknet-cpp-shared`
+
+  On Windows port, the .dll is built by default.
+
+  Refer the file https://github.com/prabindh/darknet/blob/master/arapaho/arapaho_readme.txt for more details.
 
 # How to file issues
 
